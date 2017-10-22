@@ -1,6 +1,10 @@
 # Ближайшие бары
 
-[FIXME. Здесь будет описание проекта]
+`bars.py` содержит 3 функции для расчетов:
+
+`get_biggest_bar` – принимает список баров и возвращает название бара, с наибольшим количеством мест
+`get_smallest_bar` – принимает список баров и возвращает название бара, с наименьшим количеством мест
+`get_closest_bar` – принимает список баров, долготу и широту и возвращает бар, ближайший к данным координатам
 
 # Как запустить
 
@@ -10,8 +14,22 @@
 
 ```bash
 
-$ python bars.py # possibly requires call of python3 executive instead of just python
-# FIXME вывести пример ответа скрипта
+$ python bars.py ../data/bars.json # possibly requires call of python3 executive instead of just python
+
+```
+Спросит координаты:
+```bash
+
+Please input your latitude: 37.5
+Please input your longitude: 66.1
+
+```
+И выдаст результат:
+```bash
+
+Самый большой бар:  Спорт бар «Красная машина»
+Самый маленький бар:  БАР. СОКИ
+Ближайший бар:  Таверна
 
 ```
 
