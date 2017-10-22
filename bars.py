@@ -12,43 +12,18 @@ def load_data(filepath):
 
 
 def get_biggest_bar(bars):
-    biggest_bar_name = bars[0]['properties']['Attributes']['Name']
-    biggest_bar_seats = bars[0]['properties']['Attributes']['SeatsCount']
-    for bar in bars[1:]:
-        bar_attributes = bar['properties']['Attributes']
-        seats_count = bar_attributes['SeatsCount']
-        if seats_count > biggest_bar_seats:
-            biggest_bar_name = bar_attributes['Name']
-            biggest_bar_seats = seats_count
-    return biggest_bar_name
-
+    biggest_bar = max(bars, key = lambda bar: bar['properties']['Attributes']['SeatsCount'])
+    return biggest_bar['properties']['Attributes']['Name']
 
 def get_smallest_bar(bars):
-    smallest_bar_name = bars[0]['properties']['Attributes']['Name']
-    smallest_bar_seats = bars[0]['properties']['Attributes']['SeatsCount']
-    for bar in bars[1:]:
-        bar_attributes = bar['properties']['Attributes']
-        seats_count = bar_attributes['SeatsCount']
-        if seats_count < smallest_bar_seats:
-            smallest_bar_name = bar_attributes['Name']
-            smallest_bar_seats = seats_count
-    return smallest_bar_name
+    biggest_bar = min(bars, key = lambda bar: bar['properties']['Attributes']['SeatsCount'])
+    return biggest_bar['properties']['Attributes']['Name']
 
 
 # we ignore Earth radius as all points are very close
 def get_distance(coords1, coords2):
     return hypot(coords2[0] - coords1[0], coords2[1] - coords1[1])
 
-
-def get_closest_bar(bars, longitude, latitude):
-    closest_bar = bars[0]
-    shortest_distance = get_distance(closest_bar['geometry']['coordinates'], [longitude, latitude])
-    for bar in bars[1:]:
-        distance = get_distance(bar['geometry']['coordinates'], [longitude, latitude])
-        if distance < shortest_distance:
-            closest_bar = bar
-            shortest_distance = distance
-    return closest_bar
 
 def get_closest_bar(bars, longitude, latitude):
     closest_bar_name = bars[0]['properties']['Attributes']['Name']
