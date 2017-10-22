@@ -49,6 +49,6 @@ if __name__ == '__main__':
     bars = load_data(argv[1])['features']
     latitude = float(input('Please input your latitude: '))
     longitude = float(input('Please input your longitude: '))
-    print(get_biggest_bar(bars))
-    print(get_smallest_bar(bars))
-    print(get_closest_bar(bars, longitude, latitude))
+    print(json.dumps(get_biggest_bar(bars), indent=4, ensure_ascii=False))
+    print(json.dumps(get_smallest_bar(bars), indent=4, ensure_ascii=False))
+    print(json.dumps(get_closest_bar(bars, longitude, latitude), indent=4, ensure_ascii=False))
