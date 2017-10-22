@@ -12,21 +12,27 @@ def load_data(filepath):
 
 
 def get_biggest_bar(bars):
-    biggest_bar = bars[0]
+    biggest_bar_name = bars[0]['properties']['Attributes']['Name']
+    biggest_bar_seats = bars[0]['properties']['Attributes']['SeatsCount']
     for bar in bars[1:]:
-        seats_count = bar['properties']['Attributes']['SeatsCount']
-        if seats_count > biggest_bar['properties']['Attributes']['SeatsCount']:
-            biggest_bar = bar
-    return biggest_bar
+        bar_attributes = bar['properties']['Attributes']
+        seats_count = bar_attributes['SeatsCount']
+        if seats_count > biggest_bar_seats:
+            biggest_bar_name = bar_attributes['Name']
+            biggest_bar_seats = seats_count
+    return biggest_bar_name
 
 
 def get_smallest_bar(bars):
-    smallest_bar = bars[0]
+    smallest_bar_name = bars[0]['properties']['Attributes']['Name']
+    smallest_bar_seats = bars[0]['properties']['Attributes']['SeatsCount']
     for bar in bars[1:]:
-        seats_count = bar['properties']['Attributes']['SeatsCount']
-        if seats_count < smallest_bar['properties']['Attributes']['SeatsCount']:
-            smallest_bar = bar
-    return smallest_bar
+        bar_attributes = bar['properties']['Attributes']
+        seats_count = bar_attributes['SeatsCount']
+        if seats_count < smallest_bar_seats:
+            smallest_bar_name = bar_attributes['Name']
+            smallest_bar_seats = seats_count
+    return smallest_bar_name
 
 
 # we ignore Earth radius as all points are very close
@@ -44,11 +50,21 @@ def get_closest_bar(bars, longitude, latitude):
             shortest_distance = distance
     return closest_bar
 
+def get_closest_bar(bars, longitude, latitude):
+    closest_bar_name = bars[0]['properties']['Attributes']['Name']
+    shortest_distance = get_distance(bars[0]['geometry']['coordinates'], [longitude, latitude])
+    for bar in bars[1:]:
+        distance = get_distance(bar['geometry']['coordinates'], [longitude, latitude])
+        if distance < shortest_distance:
+            closest_bar_name = bar['properties']['Attributes']['Name']
+            shortest_distance = distance
+    return closest_bar_name
+
 
 if __name__ == '__main__':
     bars = load_data(argv[1])['features']
     latitude = float(input('Please input your latitude: '))
     longitude = float(input('Please input your longitude: '))
-    print(json.dumps(get_biggest_bar(bars), indent=4, ensure_ascii=False))
-    print(json.dumps(get_smallest_bar(bars), indent=4, ensure_ascii=False))
-    print(json.dumps(get_closest_bar(bars, longitude, latitude), indent=4, ensure_ascii=False))
+    print('Самый большой бар: ', get_biggest_bar(bars))
+    print('Самый маленький бар: ', get_smallest_bar(bars))
+    print('Ближайший бар: ', get_closest_bar(bars, longitude, latitude))
