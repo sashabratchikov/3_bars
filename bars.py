@@ -1,5 +1,4 @@
 import json
-from functools import reduce
 from math import hypot
 from sys import argv
 
