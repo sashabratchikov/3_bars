@@ -16,8 +16,8 @@ def get_biggest_bar(bars):
     return biggest_bar['properties']['Attributes']['Name']
 
 def get_smallest_bar(bars):
-    biggest_bar = min(bars, key = lambda bar: bar['properties']['Attributes']['SeatsCount'])
-    return biggest_bar['properties']['Attributes']['Name']
+    smallest_bar = min(bars, key = lambda bar: bar['properties']['Attributes']['SeatsCount'])
+    return smallest_bar['properties']['Attributes']['Name']
 
 
 # we ignore Earth radius as all points are very close
